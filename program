@@ -1,0 +1,232 @@
+using System;
+
+namespace Bankprogramm
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Bank User = new Bank();
+
+            int passwort = 1234;
+            Console.Write("Bitte geben sie ihren Namen ein: ");
+            string name = Console.ReadLine();
+            Console.Write($"Guten tag {name}, bitte geben sie ihr Passwort ein: ");
+
+            string auswahl = " ";
+
+            for (int i = 0; i < 3; i++)
+            {
+
+                int pwdcontrol = Convert.ToInt32(Console.ReadLine());
+
+                if (pwdcontrol == passwort)
+                {
+                    Console.WriteLine("Sie haben sich erfolgreich eingeloggt");
+                    Console.WriteLine("Was wollen sie tun?");
+
+
+                    while (true)
+                    {
+                        Console.Write("Anzeigen (1)\n");
+                        Console.Write("Einzahlen (2)\n");
+                        Console.Write("Auszahlen (3)\n");
+                        Console.Write("Taschenrechner(4)\n");
+                        Console.Write("Programm beenden (5)\n");
+                        auswahl = Console.ReadLine();
+
+                        switch (auswahl)
+                        {
+                            case "1":
+                                User.Anzeigen();
+                                break;
+
+                            case "2":
+                                User.Einzahlen();
+                                break;
+
+                            case "3":
+                                User.Auszahlen();
+                                break;
+                            case "4":
+                                Console.WriteLine("\nWillkommen beim Taschenrechner"); //Begrüüst User
+
+                                Console.WriteLine("\nGeben Sie zwei Zahlen ein");
+
+                                Console.Write("\nErste Zahl:  "); //verlangt zahl
+
+                                double zahl1 = Convert.ToDouble(Console.ReadLine()); //Konvertiert die Zahl
+
+                                Console.Write("\nZweite Zahl:  "); //verlangt zahl
+
+
+                                double zahl2 = Convert.ToDouble(Console.ReadLine()); //Konvertiert die Zahl
+
+                                Console.WriteLine("\nWas möchten sie tun? * = multiplizieren + = addieren - = subtrahieren / = dividieren ");// Verlangt eine Rechenweise
+
+                                char eingabe = Convert.ToChar(Console.ReadLine()); //Konvertiert die eingabe
+
+
+                                switch (eingabe) //Rechnet das verlangte aus
+
+                                {
+
+                                    case '*':
+
+                                        Console.WriteLine(+(zahl1) + " * " + (zahl2) + " ist: " + (zahl1 * zahl2));
+
+
+                                        break;
+
+                                    case '+':
+
+                                        Console.WriteLine(+(zahl1) + " + " + (zahl2) + " ist: " + (zahl1 + zahl2));
+
+
+
+                                        break;
+
+                                    case '-':
+
+                                        Console.WriteLine(+(zahl1) + " - " + (zahl2) + " ist: " + (zahl1 - zahl2));
+
+
+
+                                        break;
+
+                                    case '/':
+
+                                        Console.WriteLine(+(zahl1) + " / " + (zahl2) + " ist: " + (zahl1 / zahl2));
+
+
+
+                                        break;
+
+
+
+                                    default:
+
+                                        Console.WriteLine("Sie dürfen nur *,+,-,/ eingeben");
+
+                                        break;
+
+                                }
+
+
+
+                                Console.ReadLine(); //verlangt noch eine eingabe, damit wird das ergebnis angezeigt
+                                break;
+                            case "5":
+                                Console.WriteLine("Vielen dank dass sie unser System nutzen. Auf wiedersehen.");
+                                Environment.Exit(0);
+                                break;
+
+                            default:
+                                Console.WriteLine("Sie haben keine gültige Auswahl getroffen, probieren sie es nochmals."); break;
+
+
+                        }
+
+                    }
+
+                }
+
+                else
+                {
+                    if (i < 3)
+                    {
+                        Console.WriteLine("Ihre Eingabe ist Inkorrekt! Probieren sie es nochmal.");
+
+                    }
+
+                    else
+                    {
+                        Console.WriteLine("Sie haben das Passwort zu oft Inkorrekt eingegeben, sie werden ausgeloggt");
+
+                    }
+                }
+
+            }
+        }
+
+        class Bank
+        {
+            private int Kontostand { get; set; }
+            public int Geld;
+
+            public void Einzahlen()
+            {
+                try
+                {
+                    Console.WriteLine("\n____________________________________\n");
+                    Console.Write("Geben sie den Betrag zum einzahlen an: ");
+                    Console.WriteLine("\n____________________________________\n");
+
+                    Console.Write("Betrag: ");
+                    Geld = Convert.ToInt32(Console.ReadLine());
+
+                    Kontostand += Geld;
+
+                    Console.WriteLine("");
+                    Console.WriteLine($"Sie haben nun {Kontostand} CHF auf ihrem Konto");
+                    Console.WriteLine("");
+                }
+
+                catch (Exception e)
+                {
+                    Console.Write("\n____________________________________\n");
+                    Console.Write(e.Message);
+                    Console.Write("\n____________________________________\n");
+
+                }
+
+            }
+
+            public void Auszahlen()
+            {
+                try
+                {
+                    Console.WriteLine("\n____________________________________\n");
+                    Console.Write("Geben sie den Betrag zum Auszahlen an: ");
+                    Console.WriteLine("\n____________________________________\n");
+
+
+                    Console.Write("Betrag: ");
+                    Geld = Convert.ToInt32(Console.ReadLine());
+
+                    Kontostand -= Geld;
+
+                    Console.WriteLine("");
+                    Console.WriteLine($"Sie haben nun {Kontostand} CHF auf ihrem Konto");
+                    Console.WriteLine("");
+
+                }
+                catch (Exception e)
+                {
+                    Console.Write("\n____________________________________\n");
+                    Console.Write(e.Message);
+                    Console.Write("\n____________________________________\n");
+                }
+
+            }
+
+            public void Anzeigen()
+            {
+                try
+                {
+                    Console.Write("\n____________________________________\n");
+                    Console.Write($"Ihr Kontostand beträgt: {Kontostand}");
+                    Console.Write("\n____________________________________\n");
+                }
+                catch (Exception e)
+                {
+                    Console.Write("\n____________________________________\n");
+                    Console.Write(e.Message);
+                    Console.Write("\n____________________________________\n");
+                }
+            }
+        }
+    }
+}
+/*Der User soll sich einloggen mit einem Passwort (1234) und dann soll ein Menü angezeigt werden. In diesem Menü soll er auswählen was er machen will 
+ * 1) Taschenrechner 2) Kontostand 3) Kontoeinzahlung 4) Kontoabhebung und es soll noch eine Auswahl haben das Programm zu beenden.*/
